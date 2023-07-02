@@ -1,12 +1,10 @@
 <?php
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-
-
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-      CURLOPT_URL => 'https://cevicherias.informaticapp.com/platos',
+      CURLOPT_URL => 'https://cevicherias.informaticapp.com/inventario',
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => '',
       CURLOPT_MAXREDIRS => 10,
@@ -15,11 +13,13 @@
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => 'POST',
       CURLOPT_POSTFIELDS => 
-      'pla_comida='.$_POST["pla_comida"].
-      '&pla_precio='.$_POST["pla_precio"].
-      '&pla_descrip='.$_POST["pla_descrip"].
-      '&sucu_id='.$_POST["sucu_id"].
-      '&tico_id='.$_POST["tico_id"],
+      'prod_id='.$_POST["prod_id"].
+      '&prov_id='.$_POST["prov_id"].
+      '&inv_tipo_movimiento='.$_POST["inv_tipo_movimiento"].
+      '&inv_cantidad='.$_POST["inv_cantidad"].
+      '&inv_fecha_ing='.$_POST["inv_fecha_ing"].
+      '&inv_fecha_vencimiento='.$_POST["inv_fecha_vencimiento"].
+      '&sucu_id='.$_POST["sucu_id"],
       CURLOPT_HTTPHEADER => array(
         'Content-Type: application/x-www-form-urlencoded',
         'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VBR04xOEVqRXdCOC5kenFDZFg1NW5OU3U2NTU5LkFHOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlcTNvN3M5Ly84Lmh6T3FneWdVcjZGcVdSN1hiYzNyQw=='
@@ -30,9 +30,55 @@
 
 		curl_close($curl);
 		$data = json_decode($response, true);
-		header("Location: platos_html.php");
+		header("Location: inventario_html.php");
+
 	}else{
+
     /* tabla relacionada*/ 
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://cevicherias.informaticapp.com/productos',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'GET',
+      CURLOPT_HTTPHEADER => array(
+        'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VBR04xOEVqRXdCOC5kenFDZFg1NW5OU3U2NTU5LkFHOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlcTNvN3M5Ly84Lmh6T3FneWdVcjZGcVdSN1hiYzNyQw=='
+      ),
+    ));   
+
+    $response = curl_exec($curl);
+
+		curl_close($curl);
+		$productos = json_decode($response, true);
+
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://cevicherias.informaticapp.com/proveedores',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'GET',
+      CURLOPT_HTTPHEADER => array(
+        'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VBR04xOEVqRXdCOC5kenFDZFg1NW5OU3U2NTU5LkFHOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlcTNvN3M5Ly84Lmh6T3FneWdVcjZGcVdSN1hiYzNyQw=='
+      ),
+    ));
+
+    $response = curl_exec($curl);
+
+		curl_close($curl);
+		$proveedores = json_decode($response, true);
+
 
     $curl = curl_init();
 
@@ -46,7 +92,7 @@
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => 'GET',
       CURLOPT_HTTPHEADER => array(
-        'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VWYVRVZXpBOFQuSEYza25WTjZLUTVMSzBSc1Nwc0tPOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlSGdrN1Q1dWswNGhrWFN1MG9GYmdBZFZ3dkxSbWt2dQ=='
+        'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VBR04xOEVqRXdCOC5kenFDZFg1NW5OU3U2NTU5LkFHOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlcTNvN3M5Ly84Lmh6T3FneWdVcjZGcVdSN1hiYzNyQw=='
       ),
     ));
 
@@ -54,28 +100,6 @@
 
 		curl_close($curl);
 		$sucursal = json_decode($response, true);
-
-
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => 'https://cevicherias.informaticapp.com/TipoComida',
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => '',
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 0,
-      CURLOPT_FOLLOWLOCATION => true,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => 'GET',
-      CURLOPT_HTTPHEADER => array(
-        'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VWYVRVZXpBOFQuSEYza25WTjZLUTVMSzBSc1Nwc0tPOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlSGdrN1Q1dWswNGhrWFN1MG9GYmdBZFZ3dkxSbWt2dQ=='
-      ),
-    ));
-
-    $response = curl_exec($curl);
-
-		curl_close($curl);
-		$tipocomida = json_decode($response, true);
   }
 ?>
 <!DOCTYPE html>
@@ -83,7 +107,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Registrar Plato</title>
+	<title>Registrar en Inventario</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="../../css/styles.css" rel="stylesheet" />
@@ -199,44 +223,65 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Registrar Plato de Comida</h1>
+                        <h1 class="mt-4">Registrar en Inventario</h1>
                         <div class="card mb-4">
                             <div class="card-body">
 
                                 <form method="post">
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Nombre del Plato</label>
-                                        <input type="text" name="pla_comida" class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputPassword1"  class="form-label">Descripción de Plato</label>
-                                        <input type="text" name="pla_descrip" class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Precio del Plato</label>
-                                        <input type="number" name="pla_precio" class="form-control">
-                                    </div>
 
                                     <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Seleccione el Tipo de comida</label>
-                                      <select name="tico_id" class="form-select form-select-sm" aria-label=".form-select-sm example" >
-                                        <?php foreach($tipocomida["Detalles"] as $tipocomida):?>	
-                                        <option type="text" value="<?=$tipocomida["tico_id"]?>"><?= $tipocomida["tico_nombre"] ?></option>
+                                    <label for="exampleInputPassword1" class="form-label">Seleccione el Proveedor</label>
+                                      <select name="prov_id" class="form-select form-select-sm" aria-label=".form-select-sm example" >
+                                        <?php foreach($proveedores["Detalles"] as $proveedores):?>	
+                                        <option type="text" value="<?=$proveedores["prov_id"]?>"><?= $proveedores["prov_nombre"] ?></option>
                                         <?php endforeach?>
                                       </select>
                                     </div>
 
                                     <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">seleccione la Sucursal</label>
-                                    <select name="sucu_id" class="form-select form-select-sm" aria-label=".form-select-sm example" >
-                                      <?php foreach($sucursal["Detalles"] as $sucursal):?>	
-                                      <option type="text" value="<?=$sucursal["sucu_id"]?>"><?= $sucursal["sucu_nombre"] ?></option>
-                                      <?php endforeach?>
-                                    </select>
+                                    <label for="exampleInputPassword1" class="form-label">Seleccione el Producto</label>
+                                      <select name="prod_id" class="form-select form-select-sm" aria-label=".form-select-sm example" >
+                                        <?php foreach($productos["Detalles"] as $productos):?>	
+                                        <option type="text" value="<?=$productos["prod_id"]?>"><?= $productos["prod_nombre"] ?></option>
+                                        <?php endforeach?>
+                                      </select>
+                                    </div>   
+                                    
+                                    <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Seleccione el Movimiento</label>
+                                      <select name="inv_tipo_movimiento" class="form-select form-select-sm" aria-label=".form-select-sm example" >	
+                                        <option type="text" value="Ingreso">Ingreso</option> 
+                                        <option type="text" value="Retiro">Retiro</option>                                       
+                                      </select>
                                     </div>
 
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1"  class="form-label">Cantidad</label>
+                                        <input type="number" name="inv_cantidad" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Fecha de Ingreso</label>
+                                        <input type="date" name="inv_fecha_ing" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Fecha de Vencimiento</label>
+                                        <input type="date" name="inv_fecha_vencimiento" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Seleccione Sucursal</label>
+                                      <select name="sucu_id" class="form-select form-select-sm" aria-label=".form-select-sm example" >
+                                        <?php foreach($sucursal["Detalles"] as $sucursal):?>	
+                                        <option type="text" value="<?=$sucursal["sucu_id"]?>"><?= $sucursal["sucu_nombre"] ?></option>
+                                        <?php endforeach?>
+                                      </select>
+                                    </div>
+                                    
+
                                     <button type="submit" class="btn btn-success">Registrar</button>
-                                    <a href="platos_html.php" class="btn btn-danger">Cancelar</a>
+                                    <a href="inventario_html.php" class="btn btn-danger">Cancelar</a>
                                 </form>
                             </div>
                         </div>
