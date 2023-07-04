@@ -3,17 +3,17 @@
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-      CURLOPT_URL => 'https://cevicherias.informaticapp.com/TipoProducto',
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => '',
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 0,
-      CURLOPT_FOLLOWLOCATION => true,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => 'GET',
-      CURLOPT_HTTPHEADER => array(
+    CURLOPT_URL => 'https://cevicherias.informaticapp.com/TipoProducto',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'GET',
+    CURLOPT_HTTPHEADER => array(
         'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VBR04xOEVqRXdCOC5kenFDZFg1NW5OU3U2NTU5LkFHOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlcTNvN3M5Ly84Lmh6T3FneWdVcjZGcVdSN1hiYzNyQw=='
-      ),
+    ),
     ));
 
     $response = curl_exec($curl);
@@ -153,7 +153,8 @@
                                   <thead class="thead-light">
                                     <tr>
                                       <th scope="col">Tipo</th>
-                                      <th scope="col">Descripción</th>
+                                      <th scope="col">Descripción</th>                                      
+                                      <th scope="col">Sucursal</th>
                                       <th scope="col" colspan="2">Operaciones</th>
                                     </tr>
                                   </thead>
@@ -161,7 +162,8 @@
                                     <?php foreach($data["Detalles"] as $tipo_producto): ?>
                                     <tr>
                                       <td><?= $tipo_producto["tipr_tipo"] ?></td>
-                                      <td><?= $tipo_producto["tipr_descripcion"] ?></td>
+                                      <td><?= $tipo_producto["descripcion"] ?></td>
+                                      <td><?= $tipo_producto["sucu_nombre"] ?></td>
                                       <td><a href="tipo_producto_editar_html.php?tipr_id=<?= $tipo_producto['tipr_id'] ?>" class="btn"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                       <td><a href="tipo_producto_eliminar_html.php?tipr_id=<?= $tipo_producto['tipr_id'] ?>" class="btn"><i class="fas fa-trash" color="#FF0000" ></i></a></td>
                                     </tr>

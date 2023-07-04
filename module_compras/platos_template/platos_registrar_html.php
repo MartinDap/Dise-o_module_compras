@@ -52,8 +52,8 @@
 
     $response = curl_exec($curl);
 
-		curl_close($curl);
-		$sucursal = json_decode($response, true);
+    curl_close($curl);
+    $sucursal = json_decode($response, true);
 
 
     $curl = curl_init();

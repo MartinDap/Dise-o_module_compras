@@ -1,32 +1,61 @@
 <?php
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
         
-    $curl = curl_init();
+        $curl = curl_init();
 
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => 'https://cevicherias.informaticapp.com/TipoProducto',
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => '',
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 0,
-      CURLOPT_FOLLOWLOCATION => true,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => 'POST',
-      CURLOPT_POSTFIELDS => 
-      'tipr_tipo='.$_POST["tipr_tipo"].
-      '&tipr_descripcion='.$_POST["tipr_descripcion"],
-      CURLOPT_HTTPHEADER => array(
-        'Content-Type: application/x-www-form-urlencoded',
-        'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VBR04xOEVqRXdCOC5kenFDZFg1NW5OU3U2NTU5LkFHOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlcTNvN3M5Ly84Lmh6T3FneWdVcjZGcVdSN1hiYzNyQw=='
-      ),
-    ));
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://cevicherias.informaticapp.com/TipoProducto',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => 
+            'tipr_tipo='.$_POST["tipr_tipo"].
+            '&descripcion='.$_POST["descripcion"].
+            '&sucu_id='.$_POST["sucu_id"],
+            CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VBR04xOEVqRXdCOC5kenFDZFg1NW5OU3U2NTU5LkFHOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlcTNvN3M5Ly84Lmh6T3FneWdVcjZGcVdSN1hiYzNyQw=='
+            ),
+        ));
+        
 
 		$response = curl_exec($curl);
 
 		curl_close($curl);
 		$data = json_decode($response, true);
 		header("Location: tipo_producto_html.php");
-	}
+	}else{
+
+        /* tabla relacionada*/ 
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://cevicherias.informaticapp.com/sucursal',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Basic YTJhYTA3YWRmaGRmcmV4ZmhnZGZoZGZlcnR0Z2VBR04xOEVqRXdCOC5kenFDZFg1NW5OU3U2NTU5LkFHOm8yYW8wN29kZmhkZnJleGZoZ2RmaGRmZXJ0dGdlcTNvN3M5Ly84Lmh6T3FneWdVcjZGcVdSN1hiYzNyQw=='
+        ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $sucursal = json_decode($response, true);
+
+
+
+    }
 ?>
 <!DOCTYPE html>
   <html lang="en">
@@ -162,7 +191,16 @@
 
                               <div class="mb-3">
                                 <label for="exampleInputPassword1"  class="form-label">Dirección del Tipo de Producto</label>
-                                <input type="text" name="tipr_descripcion" placeholder="Escribir" class="form-control">
+                                <input type="text" name="descripcion" placeholder="Escribir" class="form-control">
+                              </div>
+
+                              <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Seleccione la sucursal</label>
+                                <select name="sucu_id" class="form-select form-select-sm" aria-label=".form-select-sm example" >
+                                <?php foreach($sucursal["Detalles"] as $sucursal):?>	
+                                <option type="text" value="<?=$sucursal["sucu_id"]?>"><?= $sucursal["sucu_nombre"] ?></option>
+                                <?php endforeach?>
+                                </select>
                               </div>
 
                               <button type="submit" class="btn btn-success">Guardar</button>

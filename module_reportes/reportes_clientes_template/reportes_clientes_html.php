@@ -107,7 +107,7 @@ $data = json_decode($response, true);
                                     <a class="nav-link" href="module_compras/productos_template/productos_html.php">Registrar Productos</a>
                                     <a class="nav-link" href="module_compras/proveedores_template/proveedores_html.php">Registrar Proveedores</a>
                                     <a class="nav-link" href="layout-sidenav-light.html"></a>
-                                </nav>
+                                </nav>                                
                             </div> 
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReportes" aria-expanded="false" aria-controls="collapseLayouts">

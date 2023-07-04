@@ -115,7 +115,7 @@ $data = json_decode($response, true);
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseReportes" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-																<nav class="sb-sidenav-menu-nested nav">
+								<nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="../reportes_ventas_template/reportes_ventas_html.php">Reporte de Ventas</a>
                                     <a class="nav-link" href="layout-static.html">Reporte de Compras</a>
                                     <a class="nav-link" href="../reportes_pedidos_template/reportes_pedidos_html.php">Reporte de Pedidos</a>
