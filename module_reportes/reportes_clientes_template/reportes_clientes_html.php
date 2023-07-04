@@ -1,5 +1,5 @@
 <?php
-$curl = curl_init();
+        $curl = curl_init();
 
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://cevicherias.informaticapp.com/clientes',
@@ -15,9 +15,9 @@ $curl = curl_init();
         ),
         ));
 
-$response = curl_exec($curl);
-curl_close($curl);
-$data = json_decode($response, true);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $data = json_decode($response, true);
 ?>
 
 <!DOCTYPE html>
@@ -144,8 +144,8 @@ $data = json_decode($response, true);
                         <h1 class="mt-4">Reporte de Clientes</h1>
                         <div class="card mb-2">
                             <div class="card-body">
-                                <div class="card-body px-0">
-                                    <a href="tipo_producto_registrar_html.php" class="btn btn-primary">Registrar</a>
+                                <div>
+                                    <a href="../../fpdf/reportes_clientes.php" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar reportes </a>
                                 </div>
                                 <table class="table">
                                     <thead class="thead-light">
@@ -156,18 +156,18 @@ $data = json_decode($response, true);
                                         <th scope="col">Nº DNI</th>
                                         <th scope="col">Correo</th>
                                     </tr>
-                                  </thead>
-                                  <tbody>
-                                    <?php foreach($data["Detalles"] as $reporte_clientes):?>
-                                    <tr>
-                                        <td><?= $reporte_clientes["per_nombres"] ?></td>
-                                        <td><?= $reporte_clientes["per_apellidos"] ?></td>
-                                        <td><?= $reporte_clientes["per_telefono"] ?></td>
-                                        <td><?= $reporte_clientes["per_dni"] ?></td>
-                                        <td><?= $reporte_clientes["per_correo"] ?></td>
-                                    </tr>
-                                    <?php endforeach ?>
-                                </tbody>
+                                    </thead>
+                                    <tbody>
+                                            <?php foreach($data["Detalles"] as $reporte_clientes):?>
+                                            <tr>
+                                                <td><?= $reporte_clientes["per_nombres"] ?></td>
+                                                <td><?= $reporte_clientes["per_apellidos"] ?></td>
+                                                <td><?= $reporte_clientes["per_telefono"] ?></td>
+                                                <td><?= $reporte_clientes["per_dni"] ?></td>
+                                                <td><?= $reporte_clientes["per_correo"] ?></td>
+                                            </tr>
+                                            <?php endforeach ?>
+                                        </tbody>
                               </table>
                             </div>
                         </div>
