@@ -137,4 +137,4 @@ $pdf->Cell(50, 10, $reporte_clientes["per_correo"], 1, 1, 'C', 0);
 
 endforeach;
 
-$pdf->Output('Prueba.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)
+$pdf->Output('Reportes_Clientes.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)

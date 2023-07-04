@@ -82,9 +82,9 @@ class PDF extends FPDF
       $this->SetTextColor(255, 255, 255); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
-      $this->Cell(28, 10, utf8_decode('Numero de pedido'), 1, 0, 'C', 1);
-      $this->Cell(25, 10, utf8_decode('Tipo de compra'), 1, 0, 'C', 1);
-      $this->Cell(50, 10, utf8_decode('Comida'), 1, 0, 'C', 1);
+      $this->Cell(50, 10, utf8_decode('Numero de pedido'), 1, 0, 'C', 1);
+      $this->Cell(50, 10, utf8_decode('Tipo de compra'), 1, 0, 'C', 1);
+      $this->Cell(55  , 10, utf8_decode('Comida'), 1, 0, 'C', 1);
       $this->Cell(35, 10, utf8_decode('Precio de plato'), 1, 1, 'C', 1);
       // $this->Cell(50, 10, utf8_decode('Correo'), 1, 1, 'C', 1);
       // $this->Cell(25, 10, utf8_decode('ESTADO'), 1, 1, 'C', 1);
@@ -126,15 +126,15 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 $i = $i + 1;
 /* TABLA */
 
-foreach($data["Detalles"] as $reporte_clientes):
+foreach($data["Detalles"] as $reporte_pedidos):
 
-$pdf->Cell(28, 10, $reporte_clientes["per_nombres"], 1, 0, 'C', 0);
-$pdf->Cell(25, 10, $reporte_clientes["per_apellidos"], 1, 0, 'C', 0);
-$pdf->Cell(50, 10, $reporte_clientes["per_telefono"], 1, 0, 'C', 0);
-$pdf->Cell(35, 10, $reporte_clientes["per_dni"], 1, 0, 'C', 0);
-$pdf->Cell(50, 10, $reporte_clientes["per_correo"], 1, 1, 'C', 0);
+$pdf->Cell(50, 10, $reporte_pedidos["ped_id"], 1, 0, 'C', 0);
+$pdf->Cell(50, 10, $reporte_pedidos["ped_tipo_compra"], 1, 0, 'C', 0);
+$pdf->Cell(55, 10, $reporte_pedidos["pla_comida"], 1, 0, 'C', 0);
+$pdf->Cell(35, 10, $reporte_pedidos["pla_precio"], 1, 1, 'C', 0);
+// $pdf->Cell(50, 10, $reporte_clientes["pla_precio"], 1, 1, 'C', 0);
 // $pdf->Cell(25, 10, utf8_decode("total"), 1, 1, 'C', 0);
 
 endforeach;
 
-$pdf->Output('Prueba.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)
+$pdf->Output('Reportes_Pedidos.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)
